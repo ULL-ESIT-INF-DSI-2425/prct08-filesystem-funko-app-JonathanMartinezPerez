@@ -23,8 +23,8 @@ export function getUpdatedFunko(
     ...existingFunko, // Mantener valores anteriores
     ...(updates.name && { name: updates.name }),
     ...(updates.description && { description: updates.description }),
-    ...(updates.type && { type: updates.type as FunkoType }),
-    ...(updates.genre && { genre: updates.genre as FunkoGenre }),
+    ...(updates.type && { type: updates.type }),
+    ...(updates.genre && { genre: updates.genre }),
     ...(updates.franchise && { franchise: updates.franchise }),
     ...(updates.number && { number: updates.number }),
     ...(updates.exclusive !== undefined && { exclusive: updates.exclusive }),
