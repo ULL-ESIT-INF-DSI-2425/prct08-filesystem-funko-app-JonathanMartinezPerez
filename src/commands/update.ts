@@ -5,47 +5,37 @@ import { Funko, FunkoType, FunkoGenre } from "../models/funko.js";
 import chalk from "chalk";
 
 /**
+ * Valida si un Funko existe y devuelve un objeto actualizado.
+ */
+export function getUpdatedFunko(
+  user: string,
+  id: number,
+  updates: Partial<Funko>
+): Funko | null {
+  const existingFunko = FileManager.getFunko(user, id);
+
+  if (!existingFunko) {
+    console.log(chalk.red("Funko not found!"));
+    return null;
+  }
+
+  return {
+    ...existingFunko, // Mantener valores anteriores
+    ...(updates.name && { name: updates.name }),
+    ...(updates.description && { description: updates.description }),
+    ...(updates.type && { type: updates.type as FunkoType }),
+    ...(updates.genre && { genre: updates.genre as FunkoGenre }),
+    ...(updates.franchise && { franchise: updates.franchise }),
+    ...(updates.number && { number: updates.number }),
+    ...(updates.exclusive !== undefined && { exclusive: updates.exclusive }),
+    ...(updates.specialFeatures && { specialFeatures: updates.specialFeatures }),
+    ...(updates.marketValue && { marketValue: updates.marketValue }),
+  };
+}
+
+/**
  * Comando de yargs que actualiza un Funko.
  */
-export const updateFunko = {
-  handler: (argv: {
-    user: string;
-    id: number;
-    name?: string;
-    description?: string;
-    type?: string;
-    genre?: string;
-    franchise?: string;
-    number?: number;
-    exclusive?: boolean;
-    specialFeatures?: string;
-    marketValue?: number;
-  }) => {
-    const existingFunko = FileManager.getFunko(argv.user, argv.id);
-
-    if (!existingFunko) {
-      console.log(chalk.red("Funko not found!"));
-      return;
-    }
-
-    // Crear un nuevo objeto Funko con los datos actualizados
-    const updatedFunko: Funko = {
-      ...existingFunko, // Mantener valores anteriores
-      ...(argv.name && { name: argv.name }),
-      ...(argv.description && { description: argv.description }),
-      ...(argv.type && { type: argv.type as FunkoType }),
-      ...(argv.genre && { genre: argv.genre as FunkoGenre }),
-      ...(argv.franchise && { franchise: argv.franchise }),
-      ...(argv.number && { number: argv.number }),
-      ...(argv.exclusive !== undefined && { exclusive: argv.exclusive }),
-      ...(argv.specialFeatures && { specialFeatures: argv.specialFeatures }),
-      ...(argv.marketValue && { marketValue: argv.marketValue }),
-    };
-
-    FileManager.saveFunko(argv.user, updatedFunko);
-    console.log(chalk.green("Funko updated successfully!"));
-  },
-};
 export const updateCommand = yargs(hideBin(process.argv))
   .command(
     "update",
@@ -64,26 +54,21 @@ export const updateCommand = yargs(hideBin(process.argv))
       marketValue: { type: "number" },
     },
     (argv) => {
-      const existingFunko = FileManager.getFunko(argv.user, argv.id);
-
-      if (!existingFunko) {
-        console.log(chalk.red("Funko not found!"));
-        return;
-      }
-
-      // Crear un nuevo objeto Funko con los datos actualizados
-      const updatedFunko: Funko = {
-        ...existingFunko, // Mantener valores anteriores
-        ...(argv.name && { name: argv.name }),
-        ...(argv.description && { description: argv.description }),
-        ...(argv.type && { type: argv.type as FunkoType }),
-        ...(argv.genre && { genre: argv.genre as FunkoGenre }),
-        ...(argv.franchise && { franchise: argv.franchise }),
-        ...(argv.number && { number: argv.number }),
-        ...(argv.exclusive !== undefined && { exclusive: argv.exclusive }),
-        ...(argv.specialFeatures && { specialFeatures: argv.specialFeatures }),
-        ...(argv.marketValue && { marketValue: argv.marketValue }),
+      const updates = {
+        name: argv.name,
+        description: argv.description,
+        type: argv.type as FunkoType | undefined,
+        genre: argv.genre as FunkoGenre | undefined,
+        franchise: argv.franchise,
+        number: argv.number,
+        exclusive: argv.exclusive,
+        specialFeatures: argv.specialFeatures,
+        marketValue: argv.marketValue,
       };
+
+      const updatedFunko = getUpdatedFunko(argv.user, argv.id, updates);
+
+      if (!updatedFunko) return;
 
       FileManager.saveFunko(argv.user, updatedFunko);
       console.log(chalk.green("Funko updated successfully!"));
