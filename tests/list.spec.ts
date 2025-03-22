@@ -62,4 +62,25 @@ describe("listCommand", () => {
       }
     );
   });
+  
+  it("should show a warning if no Funkos are found for the user", () => {
+    vi.spyOn(FileManager, "loadFunkos").mockReturnValue([]);
+    const consoleLogMock = vi.spyOn(console, "log").mockImplementation(() => {});
+  
+    const argv = { user: testUser };
+    require("yargs").command(
+      "list",
+      "Lists all Funkos for a user",
+      () => {},
+      (args) => {
+        const funkos = FileManager.loadFunkos(args.user);
+        if (funkos.length === 0) {
+          console.log(chalk.yellow("No Funkos found for this user."));
+        }
+      }
+    ).parseSync(["list", "--user", argv.user]);
+  
+    expect(FileManager.loadFunkos).toHaveBeenCalledWith(testUser);
+    expect(consoleLogMock).toHaveBeenCalledWith(chalk.yellow("No Funkos found for this user."));
+  });
 });

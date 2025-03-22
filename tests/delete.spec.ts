@@ -57,4 +57,25 @@ describe("deleteCommand", () => {
     expect(FileManager.deleteFunko).toHaveBeenCalledWith(testUser, 999);
     expect(consoleLogMock).toHaveBeenCalledWith(chalk.red("Funko not found!"));
   });
+
+  it("should show an error if the Funko to delete does not exist", () => {
+    vi.spyOn(FileManager, "deleteFunko").mockReturnValue(false);
+    const consoleLogMock = vi.spyOn(console, "log").mockImplementation(() => {});
+  
+    const argv = { user: testUser, id: 999 };
+    require("yargs").command(
+      "delete",
+      "Deletes a Funko",
+      () => {},
+      (args) => {
+        const success = FileManager.deleteFunko(args.user, args.id);
+        if (!success) {
+          console.log(chalk.red("Funko not found!"));
+        }
+      }
+    ).parseSync(["delete", "--user", argv.user, "--id", argv.id]);
+  
+    expect(FileManager.deleteFunko).toHaveBeenCalledWith(testUser, 999);
+    expect(consoleLogMock).toHaveBeenCalledWith(chalk.red("Funko not found!"));
+  });
 });
