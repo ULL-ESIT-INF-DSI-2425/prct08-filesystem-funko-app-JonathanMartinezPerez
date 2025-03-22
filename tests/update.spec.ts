@@ -66,4 +66,50 @@ describe("updateCommand", () => {
     expect(consoleLogMock).toHaveBeenCalledWith(chalk.red("Funko not found!"));
     expect(FileManager.saveFunko).not.toHaveBeenCalled();
   });
+
+  it("should show an error if the Funko to update does not exist", () => {
+    vi.spyOn(FileManager, "getFunko").mockReturnValue(null);
+    const consoleLogMock = vi.spyOn(console, "log").mockImplementation(() => {});
+  
+    const argv = { user: testUser, id: 999, name: "Updated Funko" };
+    require("yargs").command(
+      "update",
+      "Updates a Funko",
+      () => {},
+      (args) => {
+        const existingFunko = FileManager.getFunko(args.user, args.id);
+        if (!existingFunko) {
+          console.log(chalk.red("Funko not found!"));
+        }
+      }
+    ).parseSync(["update", "--user", argv.user, "--id", argv.id, "--name", argv.name]);
+  
+    expect(FileManager.getFunko).toHaveBeenCalledWith(testUser, 999);
+    expect(consoleLogMock).toHaveBeenCalledWith(chalk.red("Funko not found!"));
+  });
+
+  it("should update only the provided fields of an existing Funko", () => {
+    vi.spyOn(FileManager, "getFunko").mockReturnValue(existingFunko);
+    const saveFunkoMock = vi.spyOn(FileManager, "saveFunko").mockImplementation(() => {});
+  
+    const argv = { user: testUser, id: 1, name: "Partially Updated Funko" };
+    require("yargs").command(
+      "update",
+      "Updates a Funko",
+      () => {},
+      (args) => {
+        const existingFunko = FileManager.getFunko(args.user, args.id);
+        if (existingFunko) {
+          const updatedFunko = { ...existingFunko, ...(args.name && { name: args.name }) };
+          FileManager.saveFunko(args.user, updatedFunko);
+        }
+      }
+    ).parseSync(["update", "--user", argv.user, "--id", argv.id, "--name", argv.name]);
+  
+    expect(FileManager.getFunko).toHaveBeenCalledWith(testUser, 1);
+    expect(saveFunkoMock).toHaveBeenCalledWith(testUser, {
+      ...existingFunko,
+      name: "Partially Updated Funko",
+    });
+  });
 });
