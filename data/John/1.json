@@ -1,6 +1,6 @@
 {
   "id": 1,
-  "name": "Batman Updated",
+  "name": "Batman actualizado",
   "description": "DC Hero",
   "type": "Pop!",
   "genre": "Animación",
@@ -8,5 +8,5 @@
   "number": 1,
   "exclusive": false,
   "specialFeatures": "Glow in the dark",
-  "marketValue": 50
+  "marketValue": 30.99
 }
