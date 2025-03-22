@@ -4,6 +4,9 @@ import { FileManager } from "../utils/fileManager.js";
 import { Funko, FunkoType, FunkoGenre } from "../models/funko.js";
 import chalk from "chalk";
 
+/**
+ * Comando de yargs que actualiza un Funko.
+ */
 export const updateFunko = {
   handler: (argv: {
     user: string;
