@@ -4,9 +4,45 @@ import { FileManager } from "../utils/fileManager.js";
 import { Funko, FunkoType, FunkoGenre } from "../models/funko.js";
 import chalk from "chalk";
 
-/**
- * Comando de yargs que actualiza una figura Funko.
- */
+export const updateFunko = {
+  handler: (argv: {
+    user: string;
+    id: number;
+    name?: string;
+    description?: string;
+    type?: string;
+    genre?: string;
+    franchise?: string;
+    number?: number;
+    exclusive?: boolean;
+    specialFeatures?: string;
+    marketValue?: number;
+  }) => {
+    const existingFunko = FileManager.getFunko(argv.user, argv.id);
+
+    if (!existingFunko) {
+      console.log(chalk.red("Funko not found!"));
+      return;
+    }
+
+    // Crear un nuevo objeto Funko con los datos actualizados
+    const updatedFunko: Funko = {
+      ...existingFunko, // Mantener valores anteriores
+      ...(argv.name && { name: argv.name }),
+      ...(argv.description && { description: argv.description }),
+      ...(argv.type && { type: argv.type as FunkoType }),
+      ...(argv.genre && { genre: argv.genre as FunkoGenre }),
+      ...(argv.franchise && { franchise: argv.franchise }),
+      ...(argv.number && { number: argv.number }),
+      ...(argv.exclusive !== undefined && { exclusive: argv.exclusive }),
+      ...(argv.specialFeatures && { specialFeatures: argv.specialFeatures }),
+      ...(argv.marketValue && { marketValue: argv.marketValue }),
+    };
+
+    FileManager.saveFunko(argv.user, updatedFunko);
+    console.log(chalk.green("Funko updated successfully!"));
+  },
+};
 export const updateCommand = yargs(hideBin(process.argv))
   .command(
     "update",
@@ -26,22 +62,24 @@ export const updateCommand = yargs(hideBin(process.argv))
     },
     (argv) => {
       const existingFunko = FileManager.getFunko(argv.user, argv.id);
+
       if (!existingFunko) {
         console.log(chalk.red("Funko not found!"));
         return;
       }
 
+      // Crear un nuevo objeto Funko con los datos actualizados
       const updatedFunko: Funko = {
-        ...existingFunko,
-        name: argv.name ?? existingFunko.name,
-        description: argv.description ?? existingFunko.description,
-        type: (argv.type as FunkoType) ?? existingFunko.type,
-        genre: (argv.genre as FunkoGenre) ?? existingFunko.genre,
-        franchise: argv.franchise ?? existingFunko.franchise,
-        number: argv.number ?? existingFunko.number,
-        exclusive: argv.exclusive ?? existingFunko.exclusive,
-        specialFeatures: argv.specialFeatures ?? existingFunko.specialFeatures,
-        marketValue: argv.marketValue ?? existingFunko.marketValue,
+        ...existingFunko, // Mantener valores anteriores
+        ...(argv.name && { name: argv.name }),
+        ...(argv.description && { description: argv.description }),
+        ...(argv.type && { type: argv.type as FunkoType }),
+        ...(argv.genre && { genre: argv.genre as FunkoGenre }),
+        ...(argv.franchise && { franchise: argv.franchise }),
+        ...(argv.number && { number: argv.number }),
+        ...(argv.exclusive !== undefined && { exclusive: argv.exclusive }),
+        ...(argv.specialFeatures && { specialFeatures: argv.specialFeatures }),
+        ...(argv.marketValue && { marketValue: argv.marketValue }),
       };
 
       FileManager.saveFunko(argv.user, updatedFunko);

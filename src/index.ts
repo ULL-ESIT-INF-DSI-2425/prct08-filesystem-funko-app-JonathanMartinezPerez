@@ -4,7 +4,6 @@ import "./commands/add.js";
 import "./commands/delete.js";
 import "./commands/update.js";
 import "./commands/list.js";
-
 /** 
  * Yargs para gestionar todos los comandos.
  */
