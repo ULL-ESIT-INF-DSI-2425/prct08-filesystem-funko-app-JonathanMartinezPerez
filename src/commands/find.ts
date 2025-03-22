@@ -35,11 +35,11 @@ export const findCommand = yargs(hideBin(process.argv))
       console.log(`Special Features: ${chalk.blue(funko.specialFeatures)}`);
 
       if (funko.marketValue < 20) {
-        console.log(`Market Value: ${chalk.green(`$${funko.marketValue}`)}`);
+        console.log("Market Value: " + chalk.green("$" + funko.marketValue));
       } else if (funko.marketValue >= 20 && funko.marketValue <= 50) {
-        console.log(`Market Value: ${chalk.yellow(`$${funko.marketValue}`)}`);
+        console.log("Market Value: " + chalk.yellow("$" + funko.marketValue));
       } else {
-        console.log(`Market Value: ${chalk.red(`$${funko.marketValue}`)}`);
+        console.log("Market Value: " + chalk.red("$" + funko.marketValue));
       }
     }
   )

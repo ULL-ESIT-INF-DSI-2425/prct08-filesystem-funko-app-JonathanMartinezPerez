@@ -12,4 +12,4 @@ yargs(hideBin(process.argv))
   .scriptName("funko-app")
   .usage("$0 <cmd> [args]")
   .help()
-  .argv;
+  .parse();
