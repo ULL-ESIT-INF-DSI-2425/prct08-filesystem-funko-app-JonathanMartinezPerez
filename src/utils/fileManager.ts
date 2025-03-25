@@ -4,13 +4,11 @@ import { Funko } from "../models/funko.js";
 
 /**
  * Clase que gestiona la lectura y escritura de figuras Funko en disco.
- * @class
- * @name FileManager
+ * @class FileManager
  */
 export class FileManager {
   /**
    * Devuelve la ruta del directorio de un usuario.
-   * @function getUserDir
    * @param {string} user Nombre del usuario.
    * @returns {string} Ruta del directorio del usuario.
    */
@@ -20,7 +18,6 @@ export class FileManager {
 
   /**
    * Guarda una figura Funko en disco.
-   * @function saveFunko
    * @param {string} user Nombre del usuario.
    * @param {Funko} funko Figura Funko a guardar.
    * @returns {void}
@@ -37,7 +34,6 @@ export class FileManager {
 
   /**
    * Carga las figuras Funko de un usuario.
-   * @function loadFunkos
    * @param {string} user Nombre del usuario.
    * @returns {Funko[]} Lista de figuras Funko.
    */
@@ -51,7 +47,6 @@ export class FileManager {
 
   /**
    * Elimina una figura Funko de un usuario.
-   * @function deleteFunko
    * @param {string} user Nombre del usuario.
    * @param {number} id Identificador de la figura.
    * @returns {boolean} Indica si la figura se ha eliminado correctamente.
@@ -67,7 +62,6 @@ export class FileManager {
 
   /**
    * Obtiene una figura Funko de un usuario.
-   * @function getFunko
    * @param {string} user Nombre del usuario.
    * @param {number} id Identificador de la figura.
    * @returns {Funko | null} Figura Funko o null si no existe.
