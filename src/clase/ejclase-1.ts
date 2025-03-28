@@ -74,7 +74,7 @@ function moveDirectoryFile(filePath: string, destPath: string): void {
  * @param extension Extensión de archivo a buscar (por ejemplo, ".txt").
  * @param callback Callback que recibe el resultado o un error.
  */
-/*
+
 function findFilesByExtension(dirPath: string, extension: string): void {
   let results: string[] = [];
 
@@ -87,18 +87,9 @@ function findFilesByExtension(dirPath: string, extension: string): void {
     files.forEach((file) => {
       const filePath = path.join(dirPath, file);
 
-      stat(filePath, (err, stats) => {
+      stat(filePath, (err) => {
         if (err) throw err;
-
-        if (stats.isDirectory()) {
-          // Recursivamente buscar en subdirectorios
-          findFilesByExtension(filePath, extension, (err) => {
-            if (err) throw err;
-
-            results = results.concat(res || []);
-            if (!--pending) throw err;
-          });
-        } else {
+         else {
           if (path.extname(file) === extension) {
             results.push(filePath);
           }
@@ -108,7 +99,7 @@ function findFilesByExtension(dirPath: string, extension: string): void {
     });
   });
 }
-*/
+
 //PRUEBAS
 
 //FUNCIONA
@@ -142,7 +133,7 @@ moveToRecycleBin(
 );*/
 
 // Ejemplo de uso
-/*findFilesByExtension(
+findFilesByExtension(
   "/home/usuario/prct08-filesystem-funko-app-JonathanMartinezPerez/src",
   ".ts"
-);*/
+);

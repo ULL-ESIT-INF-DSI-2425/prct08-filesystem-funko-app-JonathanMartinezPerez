@@ -3,5 +3,4 @@
 
 
 [![Tests](https://github.com/ULL-ESIT-INF-DSI-2425/prct06-generics-solid-JonathanMartinezPerez/actions/workflows/ci.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2425/prct06-generics-solid-JonathanMartinezPerez/actions/workflows/ci.yml)
-[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2425/prct08-filesystem-funko-app-JonathanMartinezPerez/badge.svg?branch=main)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2425/prct08-filesystem-funko-app-JonathanMartinezPerez?branch=main)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ULL-ESIT-INF-DSI-2425_prct08-filesystem-funko-app-JonathanMartinezPerez&metric=alert_status&token=f2840302d26ee5ff2e81e21aef4bc7eef8fa64cc)](https://sonarcloud.io/summary/new_code?id=ULL-ESIT-INF-DSI-2425_prct08-filesystem-funko-app-JonathanMartinezPerez)

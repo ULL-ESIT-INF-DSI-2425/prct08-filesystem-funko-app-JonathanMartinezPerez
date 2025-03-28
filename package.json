@@ -5,9 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsc-watch --onSuccess \"node dist/clase/ejclase-1.js\"",
-    "doc": "typedoc",
-    "test": "vitest run",
-    "coverage": "vitest run --coverage --coverage.include '**/src/*'"
+    "doc": "typedoc"
   },
   "keywords": [],
   "author": "",
